@@ -227,25 +227,29 @@ public class Functions {
     }
 
     public static void playerOneTurn(){
-        Main.userInput = Main.input.nextLine();
-        while(Functions.coordInputCheck(Main.userInput) == false){
-            System.out.println("Sorry please enter a valid input.");
+        do {
             Main.userInput = Main.input.nextLine();
-        }
-        System.out.println();
-        Main.hitCord = Functions.coords(Main.userInput);
-        hitCheckerOne(Main.hitCord[0], Main.hitCord[1], Main.board1_1);
+            while (Functions.coordInputCheck(Main.userInput) == false) {
+                System.out.println("Sorry please enter a valid input.");
+                Main.userInput = Main.input.nextLine();
+            }
+            System.out.println();
+            Main.hitCord = Functions.coords(Main.userInput);
+            hitCheckerOne(Main.hitCord[0], Main.hitCord[1], Main.board1_1);
+        }while(Main.hit);
     }
 
     public static void playerTwoTurn(){
-        Main.userInput = Main.input.nextLine();
-        while(Functions.coordInputCheck(Main.userInput) == false){
-            System.out.println("Sorry please enter a valid input: ");
+        do {
             Main.userInput = Main.input.nextLine();
-        }
-        System.out.println();
-        Main.hitCord = Functions.coords(Main.userInput);
-        hitCheckerTwo(Main.hitCord[0], Main.hitCord[1], Main.board1_1);
+            while (Functions.coordInputCheck(Main.userInput) == false) {
+                System.out.println("Sorry please enter a valid input: ");
+                Main.userInput = Main.input.nextLine();
+            }
+            System.out.println();
+            Main.hitCord = Functions.coords(Main.userInput);
+            hitCheckerTwo(Main.hitCord[0], Main.hitCord[1], Main.board1_1);
+        }while(Main.hit);
     }
 
     public static void hitCheckerOne(int indexOne, int indexTwo, String[][] board1_1){
@@ -254,12 +258,13 @@ public class Functions {
         if(board2_2[indexTwo][board1_1.length - indexOne - 1].charAt(0) != '⬜'){
             if(board2_2[indexTwo][board1_1.length - indexOne - 1].equals("X ")){
                 System.out.println("Sorry you've already shot here. Please enter another co-ordinate.");
+                playerOneTurn();
             }
             if(board2_2[indexTwo][board1_1.length - indexOne - 1].equals("O ")){
                 System.out.println("Sorry you've already shot here. Please enter another co-ordinate.");
                 playerOneTurn();
             }else if(board2_2[indexTwo][board1_1.length - indexOne - 1].equals("1 ") || board2_2[indexTwo][board1_1.length - indexOne - 1].equals("2 ") || board2_2[indexTwo][board1_1.length - indexOne - 1].equals("3 ") || board2_2[indexTwo][board1_1.length - indexOne - 1].equals("4 ") || board2_2[indexTwo][board1_1.length - indexOne - 1].equals("5 ")){
-                System.out.println("Congrats! You hit a ship. \n");
+                System.out.println("Congrats! You hit a ship.\n");
                 board2_2[indexTwo][board1_1.length - indexOne - 1] = "X ";
                 board1_1[indexTwo][indexOne] = "X ";
                 writeFile("board2_2.csv", board2_2);
@@ -267,10 +272,18 @@ public class Functions {
                 Main.hit = true;
                 Main.p1Hits++;
                 Main.p1Score+= 100;
+
+                if(Main.p1Hits == 10){
+                    Main.p2 = false;
+                }else{
+                    Functions.printBoard(Main.board1_1, Main.board1_2);
+                    System.out.println("You get to go again! Please enter a coordinate to shoot at:");
+                    playerOneTurn();
+                }
             }
         }else if(Main.hit == false){
             System.out.println("You Missed!\n");
-            board2_2[indexTwo][board1_1.length - 1] = "O ";
+            board2_2[indexTwo][board1_1.length - indexOne - 1] = "O ";
             board1_1[indexTwo][indexOne] = "O ";
             writeFile("board2_2.csv", board2_2);
             writeFile("board1_1.csv", board1_1);
@@ -287,23 +300,33 @@ public class Functions {
                 playerTwoTurn();
             }
             if(board1_2[indexTwo][board2_1.length - indexOne - 1].equals("O ")){
-                System.out.println("Sorry you've already  shot here. Please enter another co-ordinate: ");
+                System.out.println("Sorry you've already shot here. Please enter another co-ordinate: ");
                 playerTwoTurn();
             }else if((board1_2[indexTwo][board2_1.length - indexOne - 1].equals("1 ")) || board1_2[indexTwo][board2_1.length - indexOne - 1].equals("2 ") || board1_2[indexTwo][board2_1.length - indexOne - 1].equals("3 ") || board1_2[indexTwo][board2_1.length - indexOne - 1].equals("4 ") || board1_2[indexTwo][board2_1.length - indexOne - 1].equals("5 ")){
-                System.out.println("Congrats! You hit a ship. \n");
+                System.out.println("Congrats! You hit a ship.\n");
+                board1_2[indexTwo][board2_1.length - indexOne - 1] = "X ";
                 board2_1[indexTwo][indexOne] = "X ";
                 writeFile("board1_2.csv", board1_2);
                 writeFile("board2_1.csv", board2_1);
                 Main.hit = true;
                 Main.p2Hits++;
                 Main.p2Score += 100;
+
+
+                if(Main.p2Hits == 10){
+                    Main.p1 = false;
+                }else{
+                    Functions.printBoard(Main.board1_1, Main.board1_2);
+                    System.out.println("You get to go again! Please enter a coordinate to shoot at:");
+                    playerTwoTurn();
+                }
             }
         }else if(Main.hit == false){
             System.out.println("You Missed!\n");
             board1_2[indexTwo][board2_1.length - indexOne - 1] = "O ";
-            board2_1[indexTwo][indexOne] = "O";
+            board2_1[indexTwo][indexOne] = "O ";
             writeFile("board1_2.csv", board1_2);
-            writeFile("baord2_1.csv", board2_1);
+            writeFile("board2_1.csv", board2_1);
         }
         Main.hit = false;
     }
