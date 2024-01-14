@@ -60,8 +60,10 @@ class Main {
             System.out.println("Invalid Name"+er.getMessage());
         }
 
+        //Loop for main menu screen.
         do{
-            menuChoice = Functions.printMenuScreen();
+            menuChoice = Functions.printMenuScreen(); //call to the function that displays the menu and store the user's choice into a variable.
+            //Start the game.
             if (menuChoice == 1) {
 
                 //Variables
@@ -128,19 +130,19 @@ class Main {
                     if (p2Hits == 10)
                         p1 = false;
                 }
-
+                //Check if player one won.
                 if(p1){
-                    Functions.printEndScreenOne();
-                    break;
+                    Functions.printEndScreenOne(); //display the winner screen for player one.
+                    break; //end the loop
                 }
+                //Check if player two won.
                 if(p2){
-                    Functions.printEndScreenTwo();
-                    break;
+                    Functions.printEndScreenTwo(); //display the winner screen for player two.
+                    break; //end the loop
                 }
-
-            }else if(menuChoice == 2){
-                Functions.printInfo();
-            }else if(menuChoice == 3){
+            }else if(menuChoice == 2){ //Display the information screen for the game.
+                Functions.printInfo(); //Function to display the info.
+            }else if(menuChoice == 3){ //Exit the program.
                 System.out.println("Thank you for playing! Have a good day. ");
                 break;
             }else{
