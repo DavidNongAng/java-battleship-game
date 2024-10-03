@@ -4,8 +4,11 @@ import java.util.*; //package containing hasmap, hashtable, linkedlist, arraylis
     David Nong-Ang
     01/03/2023
     Battleship Game
-    *description*
- */
+    This is a java project recreating the battleship board game. Some java concepts used in this program includes Reading and Writing files (CSV files), 2D Arrays, and functions.
+    The program begins by asking for the 2 player's name and displays a menu after. If the user types in 2, it will display the game details including how to play. If the user types in 3, it will break out of the program. Finally, if the user types in 1, it will begin the game.
+    When the game begins, it will create 4 csv files that represent the game boards. 2 will be playerOne's POV and 2 will be playerTwo's POV. The users will be prompted to choose the coordinates of their ships and after wards take turns choosing coordinates to shoot at. If a ship has been shot at, they will be given a chance to shoot again until they miss.
+    After one player's ships has been taken out, the game will end.
+*/
 
 class Main {
 
